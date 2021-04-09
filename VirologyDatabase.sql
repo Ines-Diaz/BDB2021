@@ -42,6 +42,7 @@ CREATE TABLE virus (
     FOREIGN KEY (genome_id) REFERENCES genome (genome_id),
     FOREIGN KEY (taxonomy_id) REFERENCES taxonomy (taxonomy_id)
 );
+
 CREATE TABLE db_query (
 	query_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	query_seq VARCHAR(768) NOT NULL,
@@ -73,17 +74,3 @@ CREATE TABLE hitName (
     FOREIGN KEY (query_name) REFERENCES db_query (query_name),
     FOREIGN KEY (virus_id) REFERENCES virus (virus_id)
 );
-
-SELECT * FROM genome;
-
-SELECT * FROM gene;
-
-SELECT * FROM taxonomy;
-
-SELECT * FROM virus;
-
-SELECT * FROM db_query;
-
-SELECT * FROM hitSeq;
-
-SELECT * FROM hitName;
