@@ -7,7 +7,7 @@ Created on Fri Apr  9 00:34:31 2021
 
 import pymysql.cursors
 
-connection = pymysql.connect(host='localhost',
+conection = pymysql.connect(host='localhost',
                              user='root',
                              password='123456',                             
                              db='VirologyDatabase',

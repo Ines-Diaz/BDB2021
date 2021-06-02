@@ -4,20 +4,11 @@ Created on Thu Apr  8 17:08:18 2021
 
 @author: inesd
 """
-#CREATE TABLE db_query (
-	#query_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	#query_seq VARCHAR(768) NOT NULL,
-	#query_name VARCHAR(100) NOT NULL,
-	#query_message VARCHAR(15000) NOT NULL,
-    #PRIMARY KEY (query_id),
-    #KEY (query_seq),
-    #KEY (query_name)
-#);
 
 import random
 import pymysql.cursors
 
-connection = pymysql.connect(host='localhost',
+conection = pymysql.connect(host='localhost',
                              user='root',
                              password='123456',                             
                              db='VirologyDatabase',
