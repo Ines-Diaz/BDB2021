@@ -76,7 +76,7 @@ def listVirus(cursor, names_v, genome_ID, taxonomy_ID, virus_type_DNA, virus_typ
                 sql = "INSERT INTO virus (name_v, genome_id, taxonomy_id, virus_type, shape, year_origin) VALUES ('" + names_v[i] + "'," + str(genome_ID[i]) + "," + str(taxonomy_ID[i]) + ",'" + random.choice(virus_type_RNA) + "','" + random.choice(shape) + "'," + str(random.randint(1980,2021)) + ")" 
             print(sql)
             cursor.execute(sql)
-            connection.commit()
+            conection.commit()
 
     except:
 
@@ -85,8 +85,8 @@ def listVirus(cursor, names_v, genome_ID, taxonomy_ID, virus_type_DNA, virus_typ
     return cursor
 
 
-cursor = connection.cursor()
+cursor = conection.cursor()
 
 listVirus(cursor, names_v, genome_ID, taxonomy_ID, virus_type_DNA, virus_type_RNA, shape)
 
-connection.close()
+conection.close()

@@ -47,7 +47,7 @@ def taxonomy(cursor, family, order, class_v, phylum, kingdom, realm):
           
         cursor.execute(sql) 
         
-        connection.commit()
+        conection.commit()
         
     except:
         
@@ -55,13 +55,13 @@ def taxonomy(cursor, family, order, class_v, phylum, kingdom, realm):
             
     return cursor
 
-cursor = connection.cursor()
+cursor = conection.cursor()
 
 for i in range(100): 
     
     taxonomy(cursor, family, order, class_v, phylum, kingdom, realm)
     
-connection.close()
+conection.close()
 
 
 

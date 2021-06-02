@@ -34,7 +34,7 @@ def genome(cursor, moleculeType):
           
         cursor.execute(sql) 
         
-        connection.commit()
+        conection.commit()
         
     except:
         
@@ -68,7 +68,7 @@ def gene(cursor, nDNA, nRNA):
                     sql = "INSERT INTO gene (genome_id, nt_seq, descript) VALUES (" + str(genome_ID) + ",'" + seq + "','It is a DNA fragment')"    
                     print(sql)        
                     cursor.execute(sql) 
-                    connection.commit()  
+                    conection.commit()  
                 elif (molType == "RNA"):
                     seq = random.choice(nRNA)
                     b = random.randint(300,600)
@@ -77,7 +77,7 @@ def gene(cursor, nDNA, nRNA):
                     sql = "INSERT INTO gene (genome_id, nt_seq, descript) VALUES (" + str(genome_ID) + ",'" + seq + "','It is a RNA fragment')"    
                     print(sql)        
                     cursor.execute(sql) 
-                    connection.commit()
+                    conection.commit()
         
     except:
         
@@ -86,16 +86,13 @@ def gene(cursor, nDNA, nRNA):
     return cursor
 
 
-cursor = connection.cursor()
+cursor = conection.cursor()
 
 for i in range(100):
     genome(cursor, moleculeType)
     
 gene(cursor, nDNA, nRNA)
     
-connection.close()
-    
-
-
+conection.close() 
 
 

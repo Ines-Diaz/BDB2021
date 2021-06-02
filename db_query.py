@@ -65,7 +65,7 @@ def db_query_seq(cursor, moleculeType, nDNA, nRNA):
             sql = "INSERT INTO db_query (query_seq, query_name, query_message) VALUES ('" + seq + "','','DNA Sequence query')"    
             print(sql)        
             cursor.execute(sql) 
-            connection.commit()  
+            conection.commit()  
         elif (molType == "RNA"):
             seq = random.choice(nRNA)
             b = random.randint(300,600)
@@ -74,7 +74,7 @@ def db_query_seq(cursor, moleculeType, nDNA, nRNA):
             sql = "INSERT INTO db_query (query_seq, query_name, query_message) VALUES ('" + seq + "','','RNA Sequence query')"    
             print(sql)        
             cursor.execute(sql) 
-            connection.commit()
+            conection.commit()
     
     except:
         
@@ -90,7 +90,7 @@ def db_query_name(cursor, names_v):
         sql = "INSERT INTO db_query (query_seq, query_name, query_message) VALUES ('','" + random.choice(names_v) + "','Virus name query')"    
         print(sql)            
         cursor.execute(sql)        
-        connection.commit() 
+        conection.commit() 
         
     except:
         
@@ -99,7 +99,7 @@ def db_query_name(cursor, names_v):
     return cursor
     
 
-cursor = connection.cursor()
+cursor = conection.cursor()
 
 for i in range(50):
     a = random.randint(0,1)
@@ -109,5 +109,5 @@ for i in range(50):
         db_query_name(cursor, names_v)        
 
     
-connection.close()
+conection.close()
     

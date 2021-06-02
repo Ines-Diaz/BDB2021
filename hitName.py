@@ -35,7 +35,7 @@ def hitName(cursor, cursor1, cursor2, cursor3):
                     sql = "INSERT INTO hitName (query_name, virus_id) VALUES ('" + query_name + "'," + str(i+1) + ")"
                     print(sql)
                     cursor.execute(sql)        
-                    connection.commit()
+                    conection.commit()
                     
     except:
         
@@ -43,12 +43,12 @@ def hitName(cursor, cursor1, cursor2, cursor3):
             
     return cursor
 
-cursor = connection.cursor()
-cursor1 = connection.cursor()
-cursor2 = connection.cursor()
-cursor3 = connection.cursor()
+cursor = conection.cursor()
+cursor1 = conection.cursor()
+cursor2 = conection.cursor()
+cursor3 = conection.cursor()
 
 hitName(cursor, cursor1, cursor2, cursor3)
 
 
-connection.close()
+conection.close()
