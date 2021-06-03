@@ -128,6 +128,7 @@ def query1(conection):
     for result in cursor:
         print(result)
     cursor.close() 
+    
 # Posible variable year_origin a elegir valor entre {1980-2021}
 def query2(conection):
     cursor = conection.cursor()
@@ -288,3 +289,155 @@ def query20(conection):
     for result in cursor:
         print(result)
     cursor.close()
+    
+print()
+print('1. Insert data.')
+# Aún por ver el punto 2...
+print('2. Relate data.')
+print('3. Query data.')
+print('4. Exit the program.')
+
+mainoption = int(input('What would you like to do? '))
+print()
+
+while mainoption != 4:
+    
+    if mainoption == 1:
+        
+        print('Available tables:')
+        print('1. genome')
+        print('2. gene')
+        print('3. taxonomy')
+        print('4. virus')
+        print('5. db_query')
+        print('6. hitSeq')
+        print('7. hitName')
+        print('8. Do not insert more data in the tables.')
+        
+        insertoption = int(input('In which table do you want to insert data? '))
+        print()
+        
+        while insertoption != 8:
+            
+            if insertoption == 1:
+                
+                molecule_type = input('Molecule type: ')
+                descript = input('Description: ')
+                
+                insertnewgenome(molecule_type, descript)
+                
+            elif insertoption == 2:
+                
+                genome_id = input('Genome ID: ')
+                nt_seq = input('Nucleotide sequence: ')
+                descript = input('Description: ')
+                
+                insertnewgene(genome_id, nt_seq, descript)
+                
+            elif insertoption == 3:
+                
+                family = input('Family: ')
+                order_v = input('Order: ')
+                class_v = input('Class: ')
+                phylum = input('Phylum: ')
+                kingdom = input('Kingdom: ')
+                realm = input('Realm: ')    
+                
+                insertnewtaxonomy(family, order_v, class_v, phylum, kingdom, realm)               
+                
+            elif insertoption == 4:
+                
+                name_v = input('Virus name: ')
+                genome_id = input('Genome ID: ')
+                taxonomy_id = input('Taxonomy ID: ')
+                virus_type = input('Virus type: ')
+                shape = input('Shape: ')
+                year_origin = input('Origin year: ')
+                
+                insertnewvirus(name_v, genome_id, taxonomy_id, virus_type, shape, year_origin)
+            
+            elif insertoption == 5:
+                
+                option = input('Is it a sequence query (sq) or a name query (nq)? Write sq or nq: ')
+                if option == 'sq':
+                    query_seq = input('Query sequence: ')
+                    query_name = ''
+                    query_message = input('Query message: ')
+                    insertnewdb_query(query_seq, query_name, query_message)
+                elif option == 'nq':
+                    query_seq = ''
+                    query_name = input('Query name: ')
+                    query_message = input('Query message: ')
+                    insertnewdb_query(query_seq, query_name, query_message)
+                else:
+                    print('Error, option not recognized.')
+                    
+                
+            elif insertoption == 6:
+                
+                query_seq = input('Query sequence: ')
+                hit_index = input('Hit index: ')
+                hit_seq = input('Hit sequence: ')
+                name_v = input('Virus Name: ')	
+                gene_id = input('Gene ID: ')
+                
+                insertnewhitSeq(query_seq, hit_index, hit_seq, name_v, gene_id)
+                
+            elif insertoption == 7:
+                
+                query_name = input('Query name: ')
+                virus_id = input('Virus ID: ')
+                
+                insertnewhitName(query_name, virus_id)
+                
+            else:
+                print('Error, option not recognized.')
+            
+        print()
+        print('Available tables:')
+        print('1. genome')
+        print('2. gene')
+        print('3. taxonomy')
+        print('4. virus')
+        print('5. db_query')
+        print('6. hitSeq')
+        print('7. hitName')
+        print('8. Do not insert more data in the tables.')
+        
+        insertoption = int(input('In which table do you want to insert data? '))
+        print()
+
+    elif mainoption == 2:
+        
+        print()
+        
+    elif mainoption == 3:
+        
+        print('Available queries: ')
+        print('1. ')
+        print('2. ')
+        print('3. ')
+        print('4. ')
+        print('5. ')
+        print('6. ')
+        print('7. ')
+        print('8. ')
+        print('9. ')
+        print('10. ')
+        print('11. ')
+        print('12. ')
+        print('13. ')
+        print('14. ')
+        print('15. ')
+        print('16. ')
+        print('17. ')
+        print('18. ')
+        print('19. ')
+        print('20. ')
+        
+        queryoption = int(input('What query do you want to make? '))  
+        print()
+        
+        
+conection.close()
+           
