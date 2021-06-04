@@ -122,49 +122,49 @@ def insertnewhitName (query_name, virus_id):
     cursorT.close()
 
 # Posible variable shape a elegir valor entre {"Helical", "Icosahedral", "Envelope", "Complex"}    
-def query1(conection):
+def query1(conection, shape):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM virus WHERE shape = "Helical"')
+    cursor.execute('SELECT * FROM virus WHERE shape = "' + shape + '"')
     for result in cursor:
         print(result)
     cursor.close() 
     
 # Posible variable year_origin a elegir valor entre {1980-2021}
-def query2(conection):
+def query2(conection, year_origin):
     cursor = conection.cursor()
-    cursor.execute('SELECT virus_id, name_v, year_origin FROM virus WHERE year_origin >= 2010 ORDER BY year_origin')
+    cursor.execute('SELECT virus_id, name_v, year_origin FROM virus WHERE year_origin >= ' + year_origin + ' ORDER BY year_origin')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable length_name_v    
-def query3(conection):
+def query3(conection, length_name_v):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM hitSeq WHERE length(name_v) >= 30')
+    cursor.execute('SELECT * FROM hitSeq WHERE length(name_v) >= ' + length_name_v)
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable virus_type a elegir valor entre {"DNA","RNA"}    
-def query4(conection):
+def query4(conection, virus_type):
     cursor = conection.cursor()
-    cursor.execute('SELECT virus_id, name_v, virus_type FROM virus WHERE INSTR(virus_type,"DNA") > 0 ORDER BY virus_type')
+    cursor.execute('SELECT virus_id, name_v, virus_type FROM virus WHERE INSTR(virus_type,"' + virus_type + '") > 0 ORDER BY virus_type')
     for result in cursor:
         print(result)
     cursor.close()
  
 # Posible variable sequence a elegir un combinado de las letras {A, C, G, T}
-def query5(conection):
+def query5(conection, sequence):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM gene WHERE INSTR(nt_seq,"AGCUCAUG") > 0')
+    cursor.execute('SELECT * FROM gene WHERE INSTR(nt_seq,"' + sequence + '") > 0')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable class a elegir valor entre {"Megaviricetes", "Pokkesviricetes", "Tectiliviricetes", "Pisoniviricetes", "Stelpaviricetes", "Alsuviricetes", "Insthoviricetes"}    
-def query6(conection):
+def query6(conection, class_v):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM taxonomy WHERE class="Megaviricetes"')
+    cursor.execute('SELECT * FROM taxonomy WHERE class="' + class_v + '"')
     for result in cursor:
         print(result)
     cursor.close()
@@ -184,9 +184,9 @@ def query8(conection):
     cursor.close()
 
 #Posible variable par_impar: si es par -> par_impar = 0; si es impar -> par_impar = 1
-def query9(conection):
+def query9(conection, pair_odd):
     cursor = conection.cursor()
-    cursor.execute('SELECT v.virus_id, v.name_v, v.virus_type, g.molecule_type FROM virus v JOIN genome g WHERE v.genome_id = g.genome_id AND v.virus_id%2=0')
+    cursor.execute('SELECT v.virus_id, v.name_v, v.virus_type, g.molecule_type FROM virus v JOIN genome g WHERE v.genome_id = g.genome_id AND v.virus_id%2= ' + pair_odd)
     for result in cursor:
         print(result)
     cursor.close()
@@ -199,9 +199,9 @@ def query10(conection):
     cursor.close()
 
 # Posible variable virus_type a elegir valor entre {"DNA","RNA"}     
-def query11(conection):
+def query11(conection, virus_type):
     cursor = conection.cursor()
-    cursor.execute('SELECT v.name_v, g.molecule_type, v.virus_type, v.shape FROM virus v JOIN genome g WHERE INSTR(v.virus_type,"DNA") > 0 AND g.genome_id = v.genome_id')
+    cursor.execute('SELECT v.name_v, g.molecule_type, v.virus_type, v.shape FROM virus v JOIN genome g WHERE INSTR(v.virus_type,"' + virus_type + '") > 0 AND g.genome_id = v.genome_id')
     for result in cursor:
         print(result)
     cursor.close()
@@ -214,25 +214,25 @@ def query12(conection):
     cursor.close()
 
 # Posible variable realm a elegir valor entre {"Duplodnaviria", "Varidnaviria", "Pokkesviricetes", "Riboviria", "Monodnaviria"}     
-def query13(conection):
+def query13(conection, realm):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM virus WHERE taxonomy_id IN (SELECT taxonomy_id FROM taxonomy WHERE realm="Riboviria"')
+    cursor.execute('SELECT * FROM virus WHERE taxonomy_id IN (SELECT taxonomy_id FROM taxonomy WHERE realm="' + realm + '"')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable molecule_type a elegir valor entre {"DNA","RNA"}     
-def query14(conection):
+def query14(conection, molecule_type):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM gene WHERE genome_id IN (SELECT genome_id FROM genome WHERE molecule_type="RNA")')
+    cursor.execute('SELECT * FROM gene WHERE genome_id IN (SELECT genome_id FROM genome WHERE molecule_type="' + molecule_type + '")')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable length_nt_seq  
-def query15(conection):
+def query15(conection, length_nt_seq_1, length_nt_seq_2):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM hitSeq WHERE gene_id IN (SELECT gene_id FROM gene WHERE length(nt_seq) >= 430 AND length(nt_seq) <= 460)')
+    cursor.execute('SELECT * FROM hitSeq WHERE gene_id IN (SELECT gene_id FROM gene WHERE length(nt_seq) >= ' + length_nt_seq_1 + ' AND length(nt_seq) <= ' + length_nt_seq_2 + ')')
     for result in cursor:
         print(result)
     cursor.close()
@@ -250,25 +250,25 @@ def query15(conection):
 # "Ebolavirus", "Echovirus", "European bat lyssavirus", "Hantaan virus", "Hendra virus", "Hepatitis E virus", "Hepatitis B virus", "Hepatitis C virus", "Hepatitis Delta virus", "Horsepox virus",
 # "Human adenovirus", "Human astrovirus", "Human coronavirus", "Human cytomegalovirus", "Human enterovirus", "Japanese encephalitis virus", "Lagos bat virus", "Louping ill virus", "Mayaro virus",
 # "Norwalk virus", "Sagiyama virus"}    
-def query16(conection):
+def query16(conection, name_v):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM taxonomy WHERE taxonomy_id = (SELECT t.taxonomy_id FROM taxonomy t JOIN virus v WHERE t.taxonomy_id = v.taxonomy_id AND v.name_v="Dengue virus")')
+    cursor.execute('SELECT * FROM taxonomy WHERE taxonomy_id = (SELECT t.taxonomy_id FROM taxonomy t JOIN virus v WHERE t.taxonomy_id = v.taxonomy_id AND v.name_v="' + name_v + '")')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable shape a elegir valor entre {"Helical", "Icosahedral", "Envelope", "Complex"}    
-def query17(conection):
+def query17(conection, shape):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM genome WHERE genome_id IN (SELECT v.genome_id FROM virus v JOIN genome g WHERE g.genome_id=v.genome_id AND v.shape="Helical") ORDER BY genome_id')
+    cursor.execute('SELECT * FROM genome WHERE genome_id IN (SELECT v.genome_id FROM virus v JOIN genome g WHERE g.genome_id=v.genome_id AND v.shape="' + shape + '") ORDER BY genome_id')
     for result in cursor:
         print(result)
     cursor.close()
  
 # Posible variable sequence a elegir un combinado de las letras {A, C, G, T}
-def query18(conection):
+def query18(conection, sequence):
     cursor = conection.cursor()
-    cursor.execute('SELECT * FROM genome WHERE genome_id IN (SELECT G.genome_id FROM genome G JOIN gene g WHERE G.genome_id = g.genome_id AND INSTR(g.nt_seq,"AGCUCAUG") > 0)')
+    cursor.execute('SELECT * FROM genome WHERE genome_id IN (SELECT G.genome_id FROM genome G JOIN gene g WHERE G.genome_id = g.genome_id AND INSTR(g.nt_seq,"' + sequence + '") > 0)')
     for result in cursor:
         print(result)
     cursor.close()
@@ -283,9 +283,9 @@ def query19(conection):
 # Posible variable family a elegir valor entre {"Alloherpesviridae", "Herpesviridae", "Malacoherpesviridae", "Ackermannviridae", "Autographiviridae", "Chaseviridae", "Demerecviridae", "Drexlerviridae", 
 # "Herelleviridae", "Myoviridae", "Podoviridae", "Siphoviridae", "Mimiviridae", "Phycodnaviridae", "Pandoraviridae", "Ascoviridae", "Iridoviridae", "Marseilleviridae", "Pithoviridae", "Mininucleoviridae",
 # "Asfarviridae", "Poxviridae", "Medusaviridae", "Lavidaviridae", "Adenoviridae", "Corticoviridae", "Tectiviridae", "Turriviridae", "Finnlakeviridae", "Autolykiviridae", "Sphaerolipoviridae", "Portogloboviridae"}     
-def query20(conection):
+def query20(conection, family):
     cursor = conection.cursor()
-    cursor.execute('SELECT v.virus_id, v.name_v, v.virus_type, v.shape, v.year_origin, t.family FROM virus v JOIN (SELECT taxonomy_id, family FROM taxonomy WHERE family="Podoviridae") AS t ON v.taxonomy_id = t.taxonomy_id ORDER BY v.virus_id')
+    cursor.execute('SELECT v.virus_id, v.name_v, v.virus_type, v.shape, v.year_origin, t.family FROM virus v JOIN (SELECT taxonomy_id, family FROM taxonomy WHERE family="' + family + '") AS t ON v.taxonomy_id = t.taxonomy_id ORDER BY v.virus_id')
     for result in cursor:
         print(result)
     cursor.close()
