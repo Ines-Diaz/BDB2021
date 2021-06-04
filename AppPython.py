@@ -7,7 +7,7 @@ Created on Wed Jun  2 20:10:21 2021
 
 import pymysql.cursors
 
-conection = pymysql.connect(host='localhost',
+connection = pymysql.connect(host='localhost',
                              user='root',
                              password='123456',                             
                              db='VirologyDatabase',
@@ -17,11 +17,11 @@ conection = pymysql.connect(host='localhost',
 print ("connect successful!!")
 
 def insertnewgenome (molecule_type, descript):
-    cursor = conection.cursor()
-    cursorT = conection.cursor()
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
     text = "INSERT INTO genome (molecule_type, descript) VALUES ('" + molecule_type + "','" + descript + "')"
     cursor.execute(text)
-    conection.commit()
+    connection.commit()
     cursorT.execute('SELECT * FROM genome')
     print()
     print('Row inserted in genome table successfully.')
@@ -32,11 +32,11 @@ def insertnewgenome (molecule_type, descript):
     cursorT.close()
     
 def insertnewgene (genome_id, nt_seq, descript):
-    cursor = conection.cursor()
-    cursorT = conection.cursor()
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
     text = "INSERT INTO gene (genome_id, nt_seq, descript) VALUES (" + genome_id + ",'" + nt_seq + "','" + descript + "')"
     cursor.execute(text)
-    conection.commit()
+    connection.commit()
     cursorT.execute('SELECT * FROM gene')
     print()
     print('Row inserted in gene table successfully.')
@@ -47,11 +47,11 @@ def insertnewgene (genome_id, nt_seq, descript):
     cursorT.close()
     
 def insertnewtaxonomy (family, order_v, class_v, phylum, kingdom, realm):
-    cursor = conection.cursor()
-    cursorT = conection.cursor()
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
     text = "INSERT INTO taxonomy (family, order_v, class, phylum, kingdom, realm) VALUES ('" + family + "','" + order_v + "','" + class_v + "','" + phylum + "','" + kingdom + "','" + realm + "')"
     cursor.execute(text)
-    conection.commit()
+    connection.commit()
     cursorT.execute('SELECT * FROM taxonomy')
     print()
     print('Row inserted in taxonomy table successfully.')
@@ -62,11 +62,11 @@ def insertnewtaxonomy (family, order_v, class_v, phylum, kingdom, realm):
     cursorT.close()
 
 def insertnewvirus (name_v, genome_id, taxonomy_id, virus_type, shape, year_origin):
-    cursor = conection.cursor()
-    cursorT = conection.cursor()
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
     text = "INSERT INTO virus (name_v, genome_id, taxonomy_id, virus_type, shape, year_origin) VALUES ('" + name_v + "'," + genome_id + "," + taxonomy_id + ",'" + virus_type + "','" + shape + "'," + year_origin + ")"
     cursor.execute(text)
-    conection.commit()
+    connection.commit()
     cursorT.execute('SELECT * FROM virus')
     print()
     print('Row inserted in virus table successfully.')
@@ -77,11 +77,11 @@ def insertnewvirus (name_v, genome_id, taxonomy_id, virus_type, shape, year_orig
     cursorT.close()
     
 def insertnewdb_query (query_seq, query_name, query_message):
-    cursor = conection.cursor()
-    cursorT = conection.cursor()
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
     text = "INSERT INTO db_query (query_seq, query_name, query_message) VALUES ('" + query_seq + "','" + query_name + "','" + query_message + "')"
     cursor.execute(text)
-    conection.commit()
+    connection.commit()
     cursorT.execute('SELECT * FROM db_query')
     print()
     print('Row inserted in db_query table successfully.')
@@ -92,11 +92,11 @@ def insertnewdb_query (query_seq, query_name, query_message):
     cursorT.close()
     
 def insertnewhitSeq (query_seq, hit_index, hit_seq,	name_v,	gene_id):
-    cursor = conection.cursor()
-    cursorT = conection.cursor()
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
     text = "INSERT INTO hitSeq (query_seq, hit_index, hit_seq,	name_v,	gene_id) VALUES ('" + query_seq + "'," + hit_index + ",'" + hit_seq + "','" + name_v + "'," + gene_id + ")"
     cursor.execute(text)
-    conection.commit()
+    connection.commit()
     cursorT.execute('SELECT * FROM hitSeq')
     print()
     print('Row inserted in hitSeq table successfully.')
@@ -107,11 +107,11 @@ def insertnewhitSeq (query_seq, hit_index, hit_seq,	name_v,	gene_id):
     cursorT.close()
     
 def insertnewhitName (query_name, virus_id):
-    cursor = conection.cursor()
-    cursorT = conection.cursor()
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
     text = "INSERT INTO hitName (query_name, virus_id) VALUES ('" + query_name + "'," + virus_id + ")"
     cursor.execute(text)
-    conection.commit()
+    connection.commit()
     cursorT.execute('SELECT * FROM hitName')
     print()
     print('Row inserted in hitName table successfully.')
@@ -122,116 +122,116 @@ def insertnewhitName (query_name, virus_id):
     cursorT.close()
 
 # Posible variable shape a elegir valor entre {"Helical", "Icosahedral", "Envelope", "Complex"}    
-def query1(conection, shape):
-    cursor = conection.cursor()
+def query1(connection, shape):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM virus WHERE shape = "' + shape + '"')
     for result in cursor:
         print(result)
     cursor.close() 
     
 # Posible variable year_origin a elegir valor entre {1980-2021}
-def query2(conection, year_origin):
-    cursor = conection.cursor()
+def query2(connection, year_origin):
+    cursor = connection.cursor()
     cursor.execute('SELECT virus_id, name_v, year_origin FROM virus WHERE year_origin >= ' + year_origin + ' ORDER BY year_origin')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable length_name_v    
-def query3(conection, length_name_v):
-    cursor = conection.cursor()
+def query3(connection, length_name_v):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM hitSeq WHERE length(name_v) >= ' + length_name_v)
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable virus_type a elegir valor entre {"DNA","RNA"}    
-def query4(conection, virus_type):
-    cursor = conection.cursor()
+def query4(connection, virus_type):
+    cursor = connection.cursor()
     cursor.execute('SELECT virus_id, name_v, virus_type FROM virus WHERE INSTR(virus_type,"' + virus_type + '") > 0 ORDER BY virus_type')
     for result in cursor:
         print(result)
     cursor.close()
  
 # Posible variable sequence a elegir un combinado de las letras {A, C, G, T}
-def query5(conection, sequence):
-    cursor = conection.cursor()
+def query5(connection, sequence):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM gene WHERE INSTR(nt_seq,"' + sequence + '") > 0')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable class a elegir valor entre {"Megaviricetes", "Pokkesviricetes", "Tectiliviricetes", "Pisoniviricetes", "Stelpaviricetes", "Alsuviricetes", "Insthoviricetes"}    
-def query6(conection, class_v):
-    cursor = conection.cursor()
+def query6(connection, class_v):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM taxonomy WHERE class="' + class_v + '"')
     for result in cursor:
         print(result)
     cursor.close()
     
-def query7(conection):
-    cursor = conection.cursor()
+def query7(connection):
+    cursor = connection.cursor()
     cursor.execute('SELECT g.gene_id, g.genome_id, g.nt_seq, G.molecule_type FROM gene g JOIN genome G WHERE g.genome_id = G.genome_id')
     for result in cursor:
         print(result)
     cursor.close()
     
-def query8(conection):
-    cursor = conection.cursor()
+def query8(connection):
+    cursor = connection.cursor()
     cursor.execute('SELECT v.virus_id, v.name_v, t.family, t.order_v, t.class, t.phylum, t.kingdom, t.realm FROM virus v JOIN taxonomy t WHERE v.taxonomy_id = t.taxonomy_id ORDER BY realm')
     for result in cursor:
         print(result)
     cursor.close()
 
 #Posible variable par_impar: si es par -> par_impar = 0; si es impar -> par_impar = 1
-def query9(conection, pair_odd):
-    cursor = conection.cursor()
+def query9(connection, pair_odd):
+    cursor = connection.cursor()
     cursor.execute('SELECT v.virus_id, v.name_v, v.virus_type, g.molecule_type FROM virus v JOIN genome g WHERE v.genome_id = g.genome_id AND v.virus_id%2= ' + pair_odd)
     for result in cursor:
         print(result)
     cursor.close()
     
-def query10(conection):
-    cursor = conection.cursor()
+def query10(connection):
+    cursor = connection.cursor()
     cursor.execute('SELECT hs.hit_id, hs.name_v, hs.hit_index, hs.query_seq, db.query_seq FROM hitSeq hs JOIN db_query db WHERE hs.query_seq=db.query_seq')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable virus_type a elegir valor entre {"DNA","RNA"}     
-def query11(conection, virus_type):
-    cursor = conection.cursor()
+def query11(connection, virus_type):
+    cursor = connection.cursor()
     cursor.execute('SELECT v.name_v, g.molecule_type, v.virus_type, v.shape FROM virus v JOIN genome g WHERE INSTR(v.virus_type,"' + virus_type + '") > 0 AND g.genome_id = v.genome_id')
     for result in cursor:
         print(result)
     cursor.close()
     
-def query12(conection):
-    cursor = conection.cursor()
+def query12(connection):
+    cursor = connection.cursor()
     cursor.execute('SELECT hn.query_name, hn.virus_id, v.virus_type, v.shape FROM hitName hn JOIN virus v WHERE hn.virus_id=v.virus_id')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable realm a elegir valor entre {"Duplodnaviria", "Varidnaviria", "Pokkesviricetes", "Riboviria", "Monodnaviria"}     
-def query13(conection, realm):
-    cursor = conection.cursor()
+def query13(connection, realm):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM virus WHERE taxonomy_id IN (SELECT taxonomy_id FROM taxonomy WHERE realm="' + realm + '"')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable molecule_type a elegir valor entre {"DNA","RNA"}     
-def query14(conection, molecule_type):
-    cursor = conection.cursor()
+def query14(connection, molecule_type):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM gene WHERE genome_id IN (SELECT genome_id FROM genome WHERE molecule_type="' + molecule_type + '")')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable length_nt_seq  
-def query15(conection, length_nt_seq_1, length_nt_seq_2):
-    cursor = conection.cursor()
+def query15(connection, length_nt_seq_1, length_nt_seq_2):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM hitSeq WHERE gene_id IN (SELECT gene_id FROM gene WHERE length(nt_seq) >= ' + length_nt_seq_1 + ' AND length(nt_seq) <= ' + length_nt_seq_2 + ')')
     for result in cursor:
         print(result)
@@ -250,31 +250,31 @@ def query15(conection, length_nt_seq_1, length_nt_seq_2):
 # "Ebolavirus", "Echovirus", "European bat lyssavirus", "Hantaan virus", "Hendra virus", "Hepatitis E virus", "Hepatitis B virus", "Hepatitis C virus", "Hepatitis Delta virus", "Horsepox virus",
 # "Human adenovirus", "Human astrovirus", "Human coronavirus", "Human cytomegalovirus", "Human enterovirus", "Japanese encephalitis virus", "Lagos bat virus", "Louping ill virus", "Mayaro virus",
 # "Norwalk virus", "Sagiyama virus"}    
-def query16(conection, name_v):
-    cursor = conection.cursor()
+def query16(connection, name_v):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM taxonomy WHERE taxonomy_id = (SELECT t.taxonomy_id FROM taxonomy t JOIN virus v WHERE t.taxonomy_id = v.taxonomy_id AND v.name_v="' + name_v + '")')
     for result in cursor:
         print(result)
     cursor.close()
 
 # Posible variable shape a elegir valor entre {"Helical", "Icosahedral", "Envelope", "Complex"}    
-def query17(conection, shape):
-    cursor = conection.cursor()
+def query17(connection, shape):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM genome WHERE genome_id IN (SELECT v.genome_id FROM virus v JOIN genome g WHERE g.genome_id=v.genome_id AND v.shape="' + shape + '") ORDER BY genome_id')
     for result in cursor:
         print(result)
     cursor.close()
  
 # Posible variable sequence a elegir un combinado de las letras {A, C, G, T}
-def query18(conection, sequence):
-    cursor = conection.cursor()
+def query18(connection, sequence):
+    cursor = connection.cursor()
     cursor.execute('SELECT * FROM genome WHERE genome_id IN (SELECT G.genome_id FROM genome G JOIN gene g WHERE G.genome_id = g.genome_id AND INSTR(g.nt_seq,"' + sequence + '") > 0)')
     for result in cursor:
         print(result)
     cursor.close()
     
-def query19(conection):
-    cursor = conection.cursor()
+def query19(connection):
+    cursor = connection.cursor()
     cursor.execute('SELECT genome_id, COUNT(*) "Total Genes" FROM gene WHERE genome_id%2=1 GROUP BY genome_id')
     for result in cursor:
         print(result)
@@ -283,8 +283,8 @@ def query19(conection):
 # Posible variable family a elegir valor entre {"Alloherpesviridae", "Herpesviridae", "Malacoherpesviridae", "Ackermannviridae", "Autographiviridae", "Chaseviridae", "Demerecviridae", "Drexlerviridae", 
 # "Herelleviridae", "Myoviridae", "Podoviridae", "Siphoviridae", "Mimiviridae", "Phycodnaviridae", "Pandoraviridae", "Ascoviridae", "Iridoviridae", "Marseilleviridae", "Pithoviridae", "Mininucleoviridae",
 # "Asfarviridae", "Poxviridae", "Medusaviridae", "Lavidaviridae", "Adenoviridae", "Corticoviridae", "Tectiviridae", "Turriviridae", "Finnlakeviridae", "Autolykiviridae", "Sphaerolipoviridae", "Portogloboviridae"}     
-def query20(conection, family):
-    cursor = conection.cursor()
+def query20(connection, family):
+    cursor = connection.cursor()
     cursor.execute('SELECT v.virus_id, v.name_v, v.virus_type, v.shape, v.year_origin, t.family FROM virus v JOIN (SELECT taxonomy_id, family FROM taxonomy WHERE family="' + family + '") AS t ON v.taxonomy_id = t.taxonomy_id ORDER BY v.virus_id')
     for result in cursor:
         print(result)
@@ -450,5 +450,5 @@ while mainoption != 4:
     mainoption = int(input('What would you like to do? '))
     print()  
         
-conection.close()
+connection.close()
            

@@ -7,7 +7,7 @@ Created on Thu Apr  8 17:38:29 2021
 
 import pymysql.cursors
 
-conection = pymysql.connect(host='localhost',
+connection = pymysql.connect(host='localhost',
                              user='root',
                              password='123456',                             
                              db='VirologyDatabase',
@@ -52,7 +52,7 @@ def hitSeq(cursor, cursor1, cursor2, cursor3, cursor4):
                     sql = "INSERT INTO hitSeq (query_seq, hit_index, hit_seq, name_v, gene_id) VALUES ('" + query_seq + "'," + str(hit_index) + ",'" + hit_seq + "','" + name_v + "'," + str(i+1) + ")" 
                     print(sql)
                     cursor.execute(sql)        
-                    conection.commit()
+                    connection.commit()
                     
     except:
         
@@ -61,12 +61,12 @@ def hitSeq(cursor, cursor1, cursor2, cursor3, cursor4):
     return cursor
                     
 
-cursor = conection.cursor()
-cursor1 = conection.cursor()
-cursor2 = conection.cursor()
-cursor3 = conection.cursor()
-cursor4 = conection.cursor()
+cursor = connection.cursor()
+cursor1 = connection.cursor()
+cursor2 = connection.cursor()
+cursor3 = connection.cursor()
+cursor4 = connection.cursor()
 
 hitSeq(cursor, cursor1, cursor2, cursor3, cursor4)
 
-conection.close()
+connection.close()

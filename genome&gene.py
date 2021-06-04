@@ -8,7 +8,7 @@ Created on Thu Apr  8 11:47:20 2021
 import random
 import pymysql.cursors
 
-conection = pymysql.connect(host='localhost',
+connection = pymysql.connect(host='localhost',
                              user='root',
                              password='123456',                             
                              db='VirologyDatabase',
@@ -34,7 +34,7 @@ def genome(cursor, moleculeType):
           
         cursor.execute(sql) 
         
-        conection.commit()
+        connection.commit()
         
     except:
         
@@ -68,7 +68,7 @@ def gene(cursor, nDNA, nRNA):
                     sql = "INSERT INTO gene (genome_id, nt_seq, descript) VALUES (" + str(genome_ID) + ",'" + seq + "','It is a DNA fragment')"    
                     print(sql)        
                     cursor.execute(sql) 
-                    conection.commit()  
+                    connection.commit()  
                 elif (molType == "RNA"):
                     seq = random.choice(nRNA)
                     b = random.randint(300,600)
@@ -77,7 +77,7 @@ def gene(cursor, nDNA, nRNA):
                     sql = "INSERT INTO gene (genome_id, nt_seq, descript) VALUES (" + str(genome_ID) + ",'" + seq + "','It is a RNA fragment')"    
                     print(sql)        
                     cursor.execute(sql) 
-                    conection.commit()
+                    connection.commit()
         
     except:
         
@@ -86,13 +86,13 @@ def gene(cursor, nDNA, nRNA):
     return cursor
 
 
-cursor = conection.cursor()
+cursor = connection.cursor()
 
 for i in range(100):
     genome(cursor, moleculeType)
     
 gene(cursor, nDNA, nRNA)
     
-conection.close() 
+connection.close() 
 
 

@@ -8,7 +8,7 @@ Created on Thu Apr  8 20:47:29 2021
 import random
 import pymysql.cursors
 
-conection = pymysql.connect(host='localhost',
+connection = pymysql.connect(host='localhost',
                              user='root',
                              password='123456',
                              db='VirologyDatabase',
@@ -76,7 +76,7 @@ def listVirus(cursor, names_v, genome_ID, taxonomy_ID, virus_type_DNA, virus_typ
                 sql = "INSERT INTO virus (name_v, genome_id, taxonomy_id, virus_type, shape, year_origin) VALUES ('" + names_v[i] + "'," + str(genome_ID[i]) + "," + str(taxonomy_ID[i]) + ",'" + random.choice(virus_type_RNA) + "','" + random.choice(shape) + "'," + str(random.randint(1980,2021)) + ")" 
             print(sql)
             cursor.execute(sql)
-            conection.commit()
+            connection.commit()
 
     except:
 
@@ -85,8 +85,8 @@ def listVirus(cursor, names_v, genome_ID, taxonomy_ID, virus_type_DNA, virus_typ
     return cursor
 
 
-cursor = conection.cursor()
+cursor = connection.cursor()
 
 listVirus(cursor, names_v, genome_ID, taxonomy_ID, virus_type_DNA, virus_type_RNA, shape)
 
-conection.close()
+connection.close()

@@ -8,7 +8,7 @@ Created on Wed Apr  7 20:55:30 2021
 import random
 import pymysql.cursors
 
-conection = pymysql.connect(host='localhost',
+connection = pymysql.connect(host='localhost',
                              user='root',
                              password='123456',                             
                              db='VirologyDatabase',
@@ -47,7 +47,7 @@ def taxonomy(cursor, family, order, class_v, phylum, kingdom, realm):
           
         cursor.execute(sql) 
         
-        conection.commit()
+        connection.commit()
         
     except:
         
@@ -55,13 +55,13 @@ def taxonomy(cursor, family, order, class_v, phylum, kingdom, realm):
             
     return cursor
 
-cursor = conection.cursor()
+cursor = connection.cursor()
 
 for i in range(100): 
     
     taxonomy(cursor, family, order, class_v, phylum, kingdom, realm)
     
-conection.close()
+connection.close()
 
 
 
