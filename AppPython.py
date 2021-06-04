@@ -16,7 +16,7 @@ connection = pymysql.connect(host='localhost',
  
 print ("connect successful!!")
 
-def insertnewgenome (molecule_type, descript):
+def insertnewgenome (connection, molecule_type, descript):
     cursor = connection.cursor()
     cursorT = connection.cursor()
     text = "INSERT INTO genome (molecule_type, descript) VALUES ('" + molecule_type + "','" + descript + "')"
@@ -31,7 +31,7 @@ def insertnewgenome (molecule_type, descript):
     cursor.close()
     cursorT.close()
     
-def insertnewgene (genome_id, nt_seq, descript):
+def insertnewgene (connection, genome_id, nt_seq, descript):
     cursor = connection.cursor()
     cursorT = connection.cursor()
     text = "INSERT INTO gene (genome_id, nt_seq, descript) VALUES (" + genome_id + ",'" + nt_seq + "','" + descript + "')"
@@ -46,7 +46,7 @@ def insertnewgene (genome_id, nt_seq, descript):
     cursor.close()
     cursorT.close()
     
-def insertnewtaxonomy (family, order_v, class_v, phylum, kingdom, realm):
+def insertnewtaxonomy (connection, family, order_v, class_v, phylum, kingdom, realm):
     cursor = connection.cursor()
     cursorT = connection.cursor()
     text = "INSERT INTO taxonomy (family, order_v, class, phylum, kingdom, realm) VALUES ('" + family + "','" + order_v + "','" + class_v + "','" + phylum + "','" + kingdom + "','" + realm + "')"
@@ -61,7 +61,7 @@ def insertnewtaxonomy (family, order_v, class_v, phylum, kingdom, realm):
     cursor.close()
     cursorT.close()
 
-def insertnewvirus (name_v, genome_id, taxonomy_id, virus_type, shape, year_origin):
+def insertnewvirus (connection, name_v, genome_id, taxonomy_id, virus_type, shape, year_origin):
     cursor = connection.cursor()
     cursorT = connection.cursor()
     text = "INSERT INTO virus (name_v, genome_id, taxonomy_id, virus_type, shape, year_origin) VALUES ('" + name_v + "'," + genome_id + "," + taxonomy_id + ",'" + virus_type + "','" + shape + "'," + year_origin + ")"
@@ -76,7 +76,7 @@ def insertnewvirus (name_v, genome_id, taxonomy_id, virus_type, shape, year_orig
     cursor.close()
     cursorT.close()
     
-def insertnewdb_query (query_seq, query_name, query_message):
+def insertnewdb_query (connection, query_seq, query_name, query_message):
     cursor = connection.cursor()
     cursorT = connection.cursor()
     text = "INSERT INTO db_query (query_seq, query_name, query_message) VALUES ('" + query_seq + "','" + query_name + "','" + query_message + "')"
@@ -91,7 +91,7 @@ def insertnewdb_query (query_seq, query_name, query_message):
     cursor.close()
     cursorT.close()
     
-def insertnewhitSeq (query_seq, hit_index, hit_seq,	name_v,	gene_id):
+def insertnewhitSeq (connection, query_seq, hit_index, hit_seq,	name_v,	gene_id):
     cursor = connection.cursor()
     cursorT = connection.cursor()
     text = "INSERT INTO hitSeq (query_seq, hit_index, hit_seq,	name_v,	gene_id) VALUES ('" + query_seq + "'," + hit_index + ",'" + hit_seq + "','" + name_v + "'," + gene_id + ")"
@@ -106,7 +106,7 @@ def insertnewhitSeq (query_seq, hit_index, hit_seq,	name_v,	gene_id):
     cursor.close()
     cursorT.close()
     
-def insertnewhitName (query_name, virus_id):
+def insertnewhitName (connection, query_name, virus_id):
     cursor = connection.cursor()
     cursorT = connection.cursor()
     text = "INSERT INTO hitName (query_name, virus_id) VALUES ('" + query_name + "'," + virus_id + ")"
@@ -120,6 +120,112 @@ def insertnewhitName (query_name, virus_id):
         print(resultado)
     cursor.close()
     cursorT.close()
+    
+    
+def relation1(connection, gene_id):
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
+    cursor.execute('SELECT genome_id FROM gene WHERE gene_id = ' + gene_id)
+    for resultado in cursor:
+        genome_id = str(resultado.get('genome_id'))
+    cursorT.execute('SELECT * FROM genome WHERE genome_id = ' + genome_id)
+    print()
+    for resultado in cursorT:
+        print(resultado)
+    cursor.close()
+    cursorT.close()    
+    
+def relation2(connection, virus_id): 
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
+    cursor.execute('SELECT taxonomy_id FROM virus WHERE virus_id = ' + virus_id)
+    for resultado in cursor:
+        taxonomy_id = str(resultado.get('taxonomy_id'))
+    cursorT.execute('SELECT * FROM taxonomy WHERE taxonomy_id = ' + taxonomy_id)
+    print()
+    for resultado in cursorT:
+        print(resultado)
+    cursor.close()
+    cursorT.close()
+
+def relation3(connection, virus_id): 
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
+    cursor.execute('SELECT genome_id FROM virus WHERE virus_id = ' + virus_id)
+    for resultado in cursor:
+        genome_id = str(resultado.get('genome_id'))
+    cursorT.execute('SELECT * FROM genome WHERE genome_id = ' + genome_id)
+    print()
+    for resultado in cursorT:
+        print(resultado)
+    cursor.close()
+    cursorT.close()    
+    
+def relation4(connection, hit_id):  
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
+    cursor.execute('SELECT query_seq FROM hitSeq WHERE hit_id = ' + hit_id)
+    for resultado in cursor:
+        query_seq = str(resultado.get('query_seq'))
+    cursorT.execute('SELECT query_id, query_seq, query_message FROM db_query WHERE query_seq = "' + query_seq + '"')
+    print()
+    for resultado in cursorT:
+        print(resultado)
+    cursor.close()
+    cursorT.close()
+
+def relation5(connection, hit_id): 
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
+    cursor.execute('SELECT name_v FROM hitSeq WHERE hit_id = ' + hit_id)
+    for resultado in cursor:
+        name_v = str(resultado.get('name_v'))
+    cursorT.execute('SELECT * FROM virus WHERE name_v = "' + name_v + '"')
+    print()
+    for resultado in cursorT:
+        print(resultado)
+    cursor.close()
+    cursorT.close()    
+    
+def relation6(connection, hit_id):     
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
+    cursor.execute('SELECT gene_id FROM hitSeq WHERE hit_id = ' + hit_id)
+    for resultado in cursor:
+        gene_id = str(resultado.get('gene_id'))
+    cursorT.execute('SELECT * FROM gene WHERE gene_id = ' + gene_id)
+    print()
+    for resultado in cursorT:
+        print(resultado)
+    cursor.close()
+    cursorT.close()    
+    
+def relation7(connection, hit_id):     
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
+    cursor.execute('SELECT query_name FROM hitName WHERE hit_id = ' + hit_id)
+    for resultado in cursor:
+        query_name = str(resultado.get('query_name'))
+    cursorT.execute('SELECT query_id, query_name, query_message FROM db_query WHERE query_name = "' + query_name + '"')
+    print()
+    for resultado in cursorT:
+        print(resultado)
+    cursor.close()
+    cursorT.close()    
+    
+def relation8(connection, hit_id):     
+    cursor = connection.cursor()
+    cursorT = connection.cursor()
+    cursor.execute('SELECT virus_id FROM hitName WHERE hit_id = ' + hit_id)
+    for resultado in cursor:
+        virus_id = str(resultado.get('virus_id'))
+    cursorT.execute('SELECT * FROM virus WHERE virus_id = ' + virus_id)
+    print()
+    for resultado in cursorT:
+        print(resultado)
+    cursor.close()
+    cursorT.close()    
+    
 
 # Posible variable shape a elegir valor entre {"Helical", "Icosahedral", "Envelope", "Complex"}    
 def query1(connection, shape):
@@ -290,9 +396,9 @@ def query20(connection, family):
         print(result)
     cursor.close()
     
+    
 print()
 print('1. Insert data.')
-# Aún por ver el punto 2...
 print('2. Relate data.')
 print('3. Query data.')
 print('4. Exit the program.')
@@ -324,7 +430,7 @@ while mainoption != 4:
                 molecule_type = input('Molecule type: ')
                 descript = input('Description: ')
                 
-                insertnewgenome(molecule_type, descript)
+                insertnewgenome(connection, molecule_type, descript)
                 
             elif insertoption == 2:
                 
@@ -332,7 +438,7 @@ while mainoption != 4:
                 nt_seq = input('Nucleotide sequence: ')
                 descript = input('Description: ')
                 
-                insertnewgene(genome_id, nt_seq, descript)
+                insertnewgene(connection, genome_id, nt_seq, descript)
                 
             elif insertoption == 3:
                 
@@ -343,7 +449,7 @@ while mainoption != 4:
                 kingdom = input('Kingdom: ')
                 realm = input('Realm: ')    
                 
-                insertnewtaxonomy(family, order_v, class_v, phylum, kingdom, realm)               
+                insertnewtaxonomy(connection, family, order_v, class_v, phylum, kingdom, realm)               
                 
             elif insertoption == 4:
                 
@@ -354,7 +460,7 @@ while mainoption != 4:
                 shape = input('Shape: ')
                 year_origin = input('Origin year: ')
                 
-                insertnewvirus(name_v, genome_id, taxonomy_id, virus_type, shape, year_origin)
+                insertnewvirus(connection, name_v, genome_id, taxonomy_id, virus_type, shape, year_origin)
             
             elif insertoption == 5:
                 
@@ -363,12 +469,12 @@ while mainoption != 4:
                     query_seq = input('Query sequence: ')
                     query_name = ''
                     query_message = input('Query message: ')
-                    insertnewdb_query(query_seq, query_name, query_message)
+                    insertnewdb_query(connection, query_seq, query_name, query_message)
                 elif option == 'nq':
                     query_seq = ''
                     query_name = input('Query name: ')
                     query_message = input('Query message: ')
-                    insertnewdb_query(query_seq, query_name, query_message)
+                    insertnewdb_query(connection, query_seq, query_name, query_message)
                 else:
                     print('Error, option not recognized.')
                     
@@ -381,35 +487,108 @@ while mainoption != 4:
                 name_v = input('Virus Name: ')	
                 gene_id = input('Gene ID: ')
                 
-                insertnewhitSeq(query_seq, hit_index, hit_seq, name_v, gene_id)
+                insertnewhitSeq(connection, query_seq, hit_index, hit_seq, name_v, gene_id)
                 
             elif insertoption == 7:
                 
                 query_name = input('Query name: ')
                 virus_id = input('Virus ID: ')
                 
-                insertnewhitName(query_name, virus_id)
+                insertnewhitName(connection, query_name, virus_id)
                 
             else:
                 print('Error, option not recognized.')
             
-        print()
-        print('Available tables:')
-        print('1. genome')
-        print('2. gene')
-        print('3. taxonomy')
-        print('4. virus')
-        print('5. db_query')
-        print('6. hitSeq')
-        print('7. hitName')
-        print('8. Do not insert more data in the tables.')
-        
-        insertoption = int(input('In which table do you want to insert data? '))
-        print()
+            print()
+            print('Available tables:')
+            print('1. genome')
+            print('2. gene')
+            print('3. taxonomy')
+            print('4. virus')
+            print('5. db_query')
+            print('6. hitSeq')
+            print('7. hitName')
+            print('8. Do not insert more data in the tables.')
+            
+            insertoption = int(input('In which table do you want to insert data? '))
+            print()
 
     elif mainoption == 2:
         
+        print('Available relations:')
+        print('1. Given the gene_id of a gene, show the information corresponding to the genome of that gene.')
+        print('2. Given the virus_id of a virus, show the information corresponding to the taxonomy of that virus.')
+        print('3. Given the virus_id of a virus, show the information corresponding to the genome of that virus')
+        print('4. Given the hit_id of a sequence hit, show the information corresponding to the query characteristics of that sequence hit.')
+        print('5. Given the hit_id of a sequence hit, show the information corresponding to the virus to which the sequence corresponds.')
+        print('6. Given the hit_id of a sequence hit, show the information corresponding to the gene to which the sequence corresponds.')
+        print('7. Given the hit_id of a name hit, show the information corresponding to the query characteristics of that name hit.')        
+        print('8. Given the hit_id of a name hit, show the information corresponding to the virus to which the name corresponds.')
+        print('9. Do not show more relations.')
+        
+        relateoption = int(input('What relation do you want to make? '))
         print()
+        
+        while relateoption != 9:
+            
+            if relateoption == 1:
+                
+                gene_id = input('Gene ID: ')  
+                relation1(connection, gene_id)            
+            
+            elif relateoption == 2:
+                
+                virus_id = input('Virus ID: ')  
+                relation2(connection, virus_id)
+                
+            elif relateoption == 3:
+                
+                virus_id = input('Virus ID: ')  
+                relation3(connection, virus_id)
+                
+            elif relateoption == 4:
+                
+                hit_id = input('Hit ID: ')  
+                relation4(connection, hit_id)
+                
+            elif relateoption == 5:
+            
+                hit_id = input('Hit ID: ')  
+                relation5(connection, hit_id)
+                
+            elif relateoption == 6:
+                
+                hit_id = input('Hit ID: ')  
+                relation6(connection, hit_id)
+                
+            elif relateoption == 7:
+                
+                hit_id = input('Hit ID: ')  
+                relation7(connection, hit_id)
+                
+            elif relateoption == 8:
+                
+                hit_id = input('Hit ID: ')  
+                relation8(connection, hit_id)
+            
+            else:
+                print('Error, option not recognized.')
+        
+            print()
+            print('Available relations:')
+            print('1. Given the gene_id of a gene, show the information corresponding to the genome of that gene.')
+            print('2. Given the virus_id of a virus, show the information corresponding to the taxonomy of that virus.')
+            print('3. Given the virus_id of a virus, show the information corresponding to the genome of that virus')
+            print('4. Given the hit_id of a sequence hit, show the information corresponding to the query characteristics of that sequence hit.')
+            print('5. Given the hit_id of a sequence hit, show the information corresponding to the virus to which the sequence corresponds.')
+            print('6. Given the hit_id of a sequence hit, show the information corresponding to the gene to which the sequence corresponds.')
+            print('7. Given the hit_id of a name hit, show the information corresponding to the query characteristics of that name hit.')        
+            print('8. Given the hit_id of a name hit, show the information corresponding to the virus to which the name corresponds.')
+            print('9. Do not show more relations.')
+            
+            relateoption = int(input('What relation do you want to make? '))
+            print()
+                
         
     elif mainoption == 3:
         
@@ -442,14 +621,15 @@ while mainoption != 4:
         while queryoption != 21:
             if queryoption == 1:
                 shape = str(input('Choose a shape parameter:\n {"Helical", "Icosahedral", "Envelope", "Complex"} '))
-                query1(connection, shape)                
+                query1(connection, shape) 
+                
             elif queryoption == 2:
                 year_origin = int(input('Choose year of origin: {1980-2021}'))
                 query2(connection, year_origin)
                 
             elif queryoption == 3:
                 length_name_v = int(input('Specify name length (in characters): '))
-                queyr3(connection, length_name_v)
+                query3(connection, length_name_v)
                 
             elif queryoption == 4:
                 virus_type = str(input('Enter virus type: {DNA, RNA}'))
@@ -467,30 +647,74 @@ while mainoption != 4:
                 query7(connection)
                 
             elif queryoption == 8:
+                lol
                 
             elif queryoption == 9:
                 lol
+                
             elif queryoption == 10:
                 lol
+                
             elif queryoption == 11:
                 lol
+                
             elif queryoption == 12:
                 lol
+                
             elif queryoption == 13:
                 lol
+                
             elif queryoption == 14:
                 lol
+                
             elif queryoption == 15:
                 lol
+                
             elif queryoption == 16:
                 lol
+                
             elif queryoption == 17:
                 lol
+                
             elif queryoption == 18:
                 lol
+                
             elif queryoption == 19:
                 lol
+                
             elif queryoption == 20:
+                lol
+                
+            else:
+                print('Error, option not recognized.')
+                
+            print()
+            print('Available queries: ')
+            print('1. ')
+            print('2. ')
+            print('3. ')
+            print('4. ')
+            print('5. ')
+            print('6. ')
+            print('7. ')
+            print('8. ')
+            print('9. ')
+            print('10. ')
+            print('11. ')
+            print('12. ')
+            print('13. ')
+            print('14. ')
+            print('15. ')
+            print('16. ')
+            print('17. ')
+            print('18. ')
+            print('19. ')
+            print('20. ')
+            print('21. ')
+            
+            queryoption = int(input('What query do you want to make? '))  
+            print()
+                
         
     else:
         print('Error, option not recognized.')
