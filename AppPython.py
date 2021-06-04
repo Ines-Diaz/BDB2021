@@ -438,6 +438,17 @@ while mainoption != 4:
         queryoption = int(input('What query do you want to make? '))  
         print()
         
+    else:
+        print('Error, option not recognized.')
+        
+    print()
+    print('1. Insert data.')
+    print('2. Relate data.')
+    print('3. Query data.')
+    print('4. Exit the program.')
+
+    mainoption = int(input('What would you like to do? '))
+    print()  
         
 conection.close()
            
