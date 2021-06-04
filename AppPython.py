@@ -289,7 +289,7 @@ def query8(connection):
         print(result)
     cursor.close()
 
-#Posible variable par_impar: si es par -> par_impar = 0; si es impar -> par_impar = 1
+#Posible variable odd_even: si es par -> odd_even = 0; si es impar -> odd_even = 1
 def query9(connection, pair_odd):
     cursor = connection.cursor()
     cursor.execute('SELECT v.virus_id, v.name_v, v.virus_type, g.molecule_type FROM virus v JOIN genome g WHERE v.genome_id = g.genome_id AND v.virus_id%2= ' + pair_odd)
@@ -526,7 +526,7 @@ while mainoption != 4:
         print('8. Given the hit_id of a name hit, show the information corresponding to the virus to which the name corresponds.')
         print('9. Do not show more relations.')
         
-        relateoption = int(input('What relation do you want to make? '))
+        relateoption = int(input('What relation would you like to perform? '))
         print()
         
         while relateoption != 9:
@@ -586,36 +586,36 @@ while mainoption != 4:
             print('8. Given the hit_id of a name hit, show the information corresponding to the virus to which the name corresponds.')
             print('9. Do not show more relations.')
             
-            relateoption = int(input('What relation do you want to make? '))
+            relateoption = int(input('What relation would you like to perform? '))
             print()
                 
         
     elif mainoption == 3:
         
         print('Available queries: ')
-        print('1. ')
-        print('2. ')
-        print('3. ')
-        print('4. ')
-        print('5. ')
-        print('6. ')
-        print('7. ')
-        print('8. ')
-        print('9. ')
-        print('10. ')
-        print('11. ')
-        print('12. ')
-        print('13. ')
-        print('14. ')
-        print('15. ')
-        print('16. ')
-        print('17. ')
-        print('18. ')
-        print('19. ')
-        print('20. ')
+        print('1.  Return all virus with a specific shape}')
+        print('2.  Return all virus registered from a specific year of origin')
+        print('3.  Return virus whose names have a specific character  length from hit sequences')
+        print('4.  Return viruses from sepcific types')
+        print('5.  Return genes with specific partial/total nucleotide sequence')
+        print('6.  Return virus taxonomy from a specific class')
+        print('7.  Return gene molecule type')
+        print('8.  Return taxonomy of each virus')
+        print('9.  Return molecule type of viruses with odd/even identifier')
+        print('10. Return if a hit sequences matches a query sequence completely')
+        print('11. Return viruses and genomes from a specific virus type')
+        print('12. Return if a specific virus has already been searched by name')
+        print('13. Return viruses from a specific realm')
+        print('14. Return genes from a specifi molecule type')
+        print('15. Return sequences from a hit gene of a specific length')
+        print('16. Return virus taxonomy from a specific virus name')
+        print('17. Return genomes containing a specific virus shape')
+        print('18. Return genome containing a specific nucleotide sequence')
+        print('19. Return the amount of odd identifier genomes')
+        print('20. Return viruses that  belong to a specific family')
         print('21. ')
         
-        queryoption = int(input('What query do you want to make? '))  
+        queryoption = int(input('What query would you like to perform? '))  
         print()
         
         while queryoption != 21:
@@ -647,72 +647,80 @@ while mainoption != 4:
                 query7(connection)
                 
             elif queryoption == 8:
-                lol
+                query8(connection)
                 
             elif queryoption == 9:
-                lol
+                odd_even = int(input('Select odd (0) or even (1): '))
+                query9(connection, odd_even)
                 
             elif queryoption == 10:
-                lol
+                query10(connection)
                 
             elif queryoption == 11:
-                lol
+                virus_type = str(input('Enter virus type: {DNA, RNA}'))
+                query11(connection, virus_type)
                 
             elif queryoption == 12:
-                lol
+                query12(connection)
                 
             elif queryoption == 13:
-                lol
+                realm = str(input('Introduce taxonomy realm:\n {"Duplodnaviria", "Varidnaviria", "Pokkesviricetes", "Riboviria", "Monodnaviria"}'))
+                query13(connection, realm)
                 
             elif queryoption == 14:
-                lol
+                molecule_type = str(input('Select molecule type (DNA or RNA): '))
+                query14(connection, molecule_type)
                 
             elif queryoption == 15:
-                lol
+                length_nt_seq = int(input('Enter genetic sequence length: '))
+                query15(connection, length_nt_seq)
                 
             elif queryoption == 16:
-                lol
+                name_v = str(input('POSSIBLE VIRUS NAMES:\n {"Adenovirus","Arbovirus (encephalitis)", "Arenaviridae","Baculoviridae", "LCM-Lassa viral complexes", "Tacaribe viral complexes", "Cytomegalovirus", "Flavivirus amaril (Yellow fever)", "Flu A","H1N2 for pigs and humans", "H2N2 (Asian flu)", "H3N2 (Hong Kong Flu 1968)", "H5N1 (07-08 pandemic)", "H7N7", "Hantaan", "Hepatitis A virus", "Herpes simplex", "Herpes simplex Type 1", "Herpes simplex Type 2", "Human Herpesvirus 7", "Human Herpesvirus 8 (VHH-8)", "Herpesvirus simiae (B virus)", "Herpesvirus varicella-zoster", "Megavirus chilensis", "Mixovirus Parotiditis (Mumps)", "Papillomaviridae (Papillomas)", "Papovavirus (Human Papilloma)", "Paramyxoviridae", "Parotiditis (Mumps)", "Canine Parvovirus", "Human Parvovirus (B 19)", "Picornaviridae", "Poliovirus (Poliomyelitis)", "Poxvirus", "Rinovirus", "Rotavirus", "SARS", "SARS COV-2","Variola virus (Smallpox)", "VIH", "Belgrade Virus", "Bhanja Virus", "BK & JC Virus", "Bunyamwera Virus", "Coxsackie Virus", "Epstein-Barr Virus", "Hemorrhagic conjunctivitis virus (AHC)", "Lymphocytic choriomeningitis virus (other strains)", "Lymphocytic choriomeningitis virus (neurotropic strains)", "California encephalitis virus", "Newcastle disease virus", "Influenza virus type A", "Influenza virus type B", "Influenza virus type C",  "Hepatitis A virus (human enterovirus type 72)", "Parainfluenza virus type 1", "Varicella Zoster Virus (Varicella)", "Mumps virus", "Adeno-associated virus", "Aichi virus", "Australian bat lyssavirus","Fatal encephalitis", "Banna virus", "Barmah forest virus", "Bunyamwera virus", "Bunyavirus La Crosse", "Bunyavirus snowshoe hare", "Cercopithecine herpesvirus", "Chandipura virus", "Chikungunya virus","Cosavirus A", "Cowpox virus", "Coxsackievirus", "Crimean-Congo hemorrhagic fever virus", "Dengue virus", "Dhori virus", "Dugbe virus", "Duvenhage virus", "Eastern equine encephalitis virus","Ebolavirus", "Echovirus", "European bat lyssavirus", "Hantaan virus", "Hendra virus", "Hepatitis E virus", "Hepatitis B virus", "Hepatitis C virus", "Hepatitis Delta virus", "Horsepox virus","Human adenovirus", "Human astrovirus", "Human coronavirus", "Human cytomegalovirus", "Human enterovirus", "Japanese encephalitis virus", "Lagos bat virus", "Louping ill virus", "Mayaro virus","Norwalk virus", "Sagiyama virus"}\n Select virus name: '))
+                query16(connection, name_v)
                 
             elif queryoption == 17:
-                lol
+                shape = str(input('Choose a shape parameter:\n {"Helical", "Icosahedral", "Envelope", "Complex"} '))
+                query17(connection, shape)
                 
             elif queryoption == 18:
-                lol
-                
+                sequence = str(input('Enter specific genetic sequence (using A, C, G, T or U): '))
+                query18(connection, sequence)
+
             elif queryoption == 19:
-                lol
+                query19(connection)
                 
             elif queryoption == 20:
-                lol
-                
+                family = str(input('POSSIBLE FAMILY NAMES:\n {"Alloherpesviridae", "Herpesviridae", "Malacoherpesviridae", "Ackermannviridae", "Autographiviridae", "Chaseviridae", "Demerecviridae", "Drexlerviridae", "Herelleviridae", "Myoviridae", "Podoviridae", "Siphoviridae", "Mimiviridae", "Phycodnaviridae", "Pandoraviridae", "Ascoviridae", "Iridoviridae", "Marseilleviridae", "Pithoviridae", "Mininucleoviridae", "Asfarviridae", "Poxviridae", "Medusaviridae", "Lavidaviridae", "Adenoviridae", "Corticoviridae", "Tectiviridae", "Turriviridae", "Finnlakeviridae", "Autolykiviridae", "Sphaerolipoviridae", "Portogloboviridae"}\n Select taxonomic family: '))
+                query19(connection, family)
             else:
                 print('Error, option not recognized.')
                 
             print()
             print('Available queries: ')
-            print('1. ')
-            print('2. ')
-            print('3. ')
-            print('4. ')
-            print('5. ')
-            print('6. ')
-            print('7. ')
-            print('8. ')
-            print('9. ')
-            print('10. ')
-            print('11. ')
-            print('12. ')
-            print('13. ')
-            print('14. ')
-            print('15. ')
-            print('16. ')
-            print('17. ')
-            print('18. ')
-            print('19. ')
-            print('20. ')
+            print('1.  Return all virus with a specific shape}')
+            print('2.  Return all virus registered from a specific year of origin')
+            print('3.  Return virus whose names have a specific character  length from hit sequences')
+            print('4.  Return viruses from sepcific types')
+            print('5.  Return genes with specific partial/total nucleotide sequence')
+            print('6.  Return virus taxonomy from a specific class')
+            print('7.  Return gene molecule type')
+            print('8.  Return taxonomy of each virus')
+            print('9.  Return molecule type of viruses with odd/even identifier')
+            print('10. Return if a hit sequences matches a query sequence completely')
+            print('11. Return viruses and genomes from a specific virus type')
+            print('12. Return if a specific virus has already been searched by name')
+            print('13. Return viruses from a specific realm')
+            print('14. Return genes from a specifi molecule type')
+            print('15. Return sequences from a hit gene of a specific length')
+            print('16. Return virus taxonomy from a specific virus name')
+            print('17. Return genomes containing a specific virus shape')
+            print('18. Return genome containing a specific nucleotide sequence')
+            print('19. Return the amount of odd identifier genomes')
+            print('20. Return viruses that  belong to a specific family')
             print('21. ')
             
-            queryoption = int(input('What query do you want to make? '))  
+            queryoption = int(input('What query would you like to perform? '))  
             print()
                 
         
