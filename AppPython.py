@@ -434,9 +434,63 @@ while mainoption != 4:
         print('18. ')
         print('19. ')
         print('20. ')
+        print('21. ')
         
         queryoption = int(input('What query do you want to make? '))  
         print()
+        
+        while queryoption != 21:
+            if queryoption == 1:
+                shape = str(input('Choose a shape parameter:\n {"Helical", "Icosahedral", "Envelope", "Complex"} '))
+                query1(connection, shape)                
+            elif queryoption == 2:
+                year_origin = int(input('Choose year of origin: {1980-2021}'))
+                query2(connection, year_origin)
+                
+            elif queryoption == 3:
+                length_name_v = int(input('Specify name length (in characters): '))
+                queyr3(connection, length_name_v)
+                
+            elif queryoption == 4:
+                virus_type = str(input('Enter virus type: {DNA, RNA}'))
+                query4(connection, virus_type)
+                
+            elif queryoption == 5:
+                sequence = str(input('Enter specific genetic sequence (using A, C, G, T or U): '))
+                query5(connection, sequence)
+                
+            elif queryoption == 6:
+                tax_class = str(input('Select specific taxonomy class:\n {"Megaviricetes", "Pokkesviricetes", "Tectiliviricetes", "Pisoniviricetes", "Stelpaviricetes", "Alsuviricetes", "Insthoviricetes"}  '))
+                query6(connection, tax_class)
+                
+            elif queryoption == 7:
+                query7(connection)
+                
+            elif queryoption == 8:
+                
+            elif queryoption == 9:
+                lol
+            elif queryoption == 10:
+                lol
+            elif queryoption == 11:
+                lol
+            elif queryoption == 12:
+                lol
+            elif queryoption == 13:
+                lol
+            elif queryoption == 14:
+                lol
+            elif queryoption == 15:
+                lol
+            elif queryoption == 16:
+                lol
+            elif queryoption == 17:
+                lol
+            elif queryoption == 18:
+                lol
+            elif queryoption == 19:
+                lol
+            elif queryoption == 20:
         
     else:
         print('Error, option not recognized.')
