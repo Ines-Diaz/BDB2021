@@ -519,7 +519,7 @@ while mainoption != 4:
         print('8. Given the hit_id of a name hit, show the information corresponding to the virus to which the name corresponds.')
         print('9. Do not show more relations.')
         
-        relateoption = int(input('What relation would you like to perform? '))
+        relateoption = int(input('What relation would you like to make? '))
         print()
         
         while relateoption != 9:
@@ -579,7 +579,7 @@ while mainoption != 4:
             print('8. Given the hit_id of a name hit, show the information corresponding to the virus to which the name corresponds.')
             print('9. Do not show more relations.')
             
-            relateoption = int(input('What relation would you like to perform? '))
+            relateoption = int(input('What relation would you like to make? '))
             print()
                 
         
@@ -606,7 +606,7 @@ while mainoption != 4:
         print('18. Return genome containing a specific nucleotide sequence')
         print('19. Return the amount of odd/even identifier genomes')
         print('20. Return viruses that  belong to a specific family')
-        print('21. Do not make any more query.')
+        print('21. Do not make any more queries.')
         
         queryoption = int(input('What query would you like to perform? '))  
         print()
